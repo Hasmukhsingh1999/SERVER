@@ -12,14 +12,21 @@ export const userRegister = async (req, res, next) => {
       password: hashPassword,
       ...others,
     });
-    const isUser = await User.findOne({email});
-    if(isUser){
-      res.status(409).json({message:"User already existed!"})
+    const isUser = await User.findOne({ email });
+    if (isUser) {
+      res.status(409).json({ message: "User already existed!" });
     }
     generateToken(res, newUser._id);
     await newUser.save();
     res.status(200).json({ message: "User created", newUser });
   } catch (error) {
+    if (err.code === 11000) {
+      res
+        .status(400)
+        .json({
+          message: "Duplicate key error. User with this email already exists",
+        });
+    }
     next(error);
   }
 };
