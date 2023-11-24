@@ -5,6 +5,8 @@ import cors from 'cors';
 import morgan from "morgan";
 import helmet from "helmet";
 import { errorHandler, notFound } from "./middleware/error.middleware.js";
+import userRoute from './routes/user.routes.js'
+
 
 
 dotenv.config();
@@ -21,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // Routes ->
-
+app.use('/api/user',userRoute)
 
 
 // Error Handling ->
