@@ -4,6 +4,7 @@ import { connectDB } from "./config/db.js";
 import cors from 'cors';
 import morgan from "morgan";
 import helmet from "helmet";
+import { errorHandler, notFound } from "./middleware/error.middleware.js";
 
 
 dotenv.config();
@@ -24,7 +25,8 @@ app.use(express.urlencoded({extended:true}));
 
 
 // Error Handling ->
-
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
